@@ -10,11 +10,11 @@
 
     <meta
       name="description"
-      content="Bali Funeral Home ofron shërbime funerale profesionale dhe transport funebër ndërkombëtar Itali–Shqipëri, Kosovë e Maqedoni. Ceremoni, arkivolë, dekorime florale dhe monumente."
+      content="Bali Funeral Home ofron shërbime funerale profesionale dhe transport funebër ndërkombëtar Itali–Shqipëri, Kosovë e Maqedoni. Ceremoni, arkivolë, dekorime florale dhe monume[...]"
     />
     <meta
       name="keywords"
-      content="shërbime funerale, transport funebër ndërkombëtar, funerale Itali Shqipëri, funerale Itali Kosovë, riatdhesim trupash, onoranze funebri, arkivolë, gurë varresh, monumente, dekorime"
+      content="shërbime funerale, transport funebër ndërkombëtar, funerale Itali Shqipëri, funerale Itali Kosovë, riatdhesim trupash, onoranze funebri, arkivolë, gurë varresh, monumente, d[...]"
     />
     <meta name="author" content="Bali Funeral Home" />
     <meta name="robots" content="index, follow" />
@@ -54,6 +54,40 @@
     <link rel="preload" href="./main.28b5fb0d.css" as="style" />
     <link rel="preload" href="./main.886c6bae.js" as="script" />
     <link rel="stylesheet" href="./main.28b5fb0d.css" />
+
+    <!-- Make images responsive and ensure they fit containers regardless of original size -->
+    <style>
+      /* Global rule for all images: scale down to container width, keep aspect ratio */
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+      }
+
+      /* Helper class for images that should fill their container (cover) */
+      .img-cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* Helper class for fixed-aspect ratio containers using background-image */
+      .responsive-bg {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: auto;
+      }
+
+      /* Ensure root fills viewport so SPA can size content correctly */
+      html, body, #root {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
 
     <title>Bali Funeral — Shërbime Funerale & Transport Ndërkombëtar | Peqin</title>
 
@@ -120,6 +154,43 @@
           });
         });
       }
+
+      // If the SPA injects images dynamically, ensure they get responsive classes
+      // MutationObserver adds the 'img-cover' class to images inside #root that lack explicit sizing
+      (function(){
+        function enhanceImg(img){
+          if (!img) return;
+          // If the image has inline width/height that would break responsiveness, remove them
+          try {
+            img.removeAttribute('width');
+            img.removeAttribute('height');
+          } catch(e){}
+          // Add a responsive helper class if none present
+          if (!img.classList.contains('img-cover')) img.classList.add('img-cover');
+        }
+
+        var observer = new MutationObserver(function(mutations){
+          mutations.forEach(function(m){
+            m.addedNodes && m.addedNodes.forEach(function(node){
+              if (node.nodeType !== 1) return;
+              if (node.tagName === 'IMG') {
+                enhanceImg(node);
+              } else {
+                // find images inside newly added subtree
+                var imgs = node.querySelectorAll && node.querySelectorAll('img');
+                imgs && imgs.forEach(enhanceImg);
+              }
+            });
+          });
+        });
+
+        var root = document.getElementById('root');
+        if (root) {
+          // enhance any existing images
+          root.querySelectorAll && root.querySelectorAll('img').forEach(enhanceImg);
+          observer.observe(root, { childList: true, subtree: true });
+        }
+      })();
     </script>
 
     <script defer src="./main.886c6bae.js"></script>
