@@ -1,13 +1,13 @@
 // Simple service worker for basic static asset caching
 const CACHE_NAME = 'funeral-cache-v1';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/main.28b5fb0d.css',
-  '/main.886c6bae.js',
-  '/logo.jpeg',
-  '/manifest.json',
-  '/404.html'
+  './',
+  './index.html',
+  './main.28b5fb0d.css',
+  './main.886c6bae.js',
+  './logo.jpeg',
+  './manifest.json',
+  './404.html'
 ];
 
 self.addEventListener('install', event => {
@@ -35,7 +35,7 @@ self.addEventListener('fetch', event => {
         const copy = res.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(req, copy));
         return res;
-      }).catch(() => caches.match('/index.html'))
+      }).catch(() => caches.match('./index.html'))
     );
     return;
   }
