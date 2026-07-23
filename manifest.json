@@ -3,17 +3,17 @@
   "name": "Bali Funeral Home — Shërbime Funerale",
   "icons": [
     {
-      "src": "/logo.jpeg",
+      "src": "./logo.jpeg",
       "sizes": "512x512",
       "type": "image/jpeg"
     },
     {
-      "src": "/logo.jpeg",
+      "src": "./logo.jpeg",
       "sizes": "192x192",
       "type": "image/jpeg"
     }
   ],
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "theme_color": "#0A0A0A",
   "background_color": "#0A0A0A"
