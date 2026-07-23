@@ -105,9 +105,22 @@
     <noscript>
       <link rel="stylesheet" href="./main.28b5fb0d.css" />
       <div style="font-family: Arial, sans-serif; padding: 2rem; text-align: center;">
-        Questa pagina richiede JavaScript per funzionare correttamente. Se hai disabilitato JavaScript, puoi comunque visitare la nostra pagina principale <a href="/">qui</a>.
+        Kjo faqe kërkon JavaScript për t'u funksionuar si duhet. Nëse e keni çaktivizuar JavaScript, mund të vizitoni faqen tonë kryesore <a href="/">këtu</a>.
       </div>
     </noscript>
+
+    <script>
+      // Register service worker for basic offline caching
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').then(function(reg){
+            console.log('ServiceWorker registered', reg.scope);
+          }).catch(function(err){
+            console.warn('ServiceWorker registration failed:', err);
+          });
+        });
+      }
+    </script>
 
     <script defer src="./main.886c6bae.js"></script>
   </body>
